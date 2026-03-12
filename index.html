@@ -3,122 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ATR GOLD TERMINAL</title>
+    <title>ATR GOLD TERMINAL PRO</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; color: #d1d4dc; }
+        :root { --bg: #0b0e11; --card: #181a20; --gold: #f0b90b; --green: #2ebd85; --red: #f6465d; --border: #2b3139; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--bg); overflow: hidden; font-family: 'Inter', sans-serif; color: #eaecef; }
+
+        /* Grid Layout */
+        .app-container { display: grid; grid-template-columns: 1fr 140px; height: 100vh; }
         
-        /* Основная сетка: график слева, монеты справа */
-        .main-container {
-            display: grid;
-            grid-template-columns: 1fr 100px; /* 100px под панель монет */
-            height: 100vh;
-            width: 100vw;
-        }
+        /* Left: Charts */
+        #chart-zone { position: relative; border-right: 1px solid var(--border); display: grid; }
+        .grid-1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+        .grid-4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+        .chart-frame { width: 100%; height: 100%; border: 0.5px solid #131722; }
 
-        #tv-chart-container { 
-            height: 100%; 
-            width: 100%; 
-            border-right: 1px solid #2a2e39;
-        }
-
-        /* Правая панель */
-        .side-bar { 
-            background: #131722; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 10px 5px; 
-            gap: 8px;
-            overflow-y: auto;
-        }
-
-        .side-bar::-webkit-scrollbar { width: 0px; }
-
-        .coin-btn {
-            background: #2a2e39; 
-            color: #d1d4dc; 
-            border: none; 
-            width: 80px;
-            padding: 8px 0;
-            border-radius: 4px; 
-            font-size: 11px; 
-            cursor: pointer; 
-            font-weight: bold;
-            flex-shrink: 0;
-            text-align: center;
-        }
+        /* Right: Watchlist */
+        .side-bar { background: var(--card); overflow-y: auto; padding: 5px; display: flex; flex-direction: column; gap: 4px; }
+        .side-bar::-webkit-scrollbar { width: 2px; }
         
-        .coin-btn:active { background: #363c4e; }
-        .active-btn { border: 1px solid #f0b90b; color: #f0b90b; background: rgba(240, 185, 11, 0.1); }
-
-        .badge-fixed {
-            position: fixed;
-            bottom: 10px;
-            right: 110px;
-            font-size: 10px;
-            background: rgba(0, 0, 0, 0.8);
-            color: #f0b90b;
-            padding: 2px 8px;
-            border: 1px solid #f0b90b;
-            border-radius: 4px;
-            z-index: 100;
+        .coin-item { 
+            background: #1e2329; padding: 8px; border-radius: 4px; cursor: pointer; 
+            border-left: 3px solid transparent; transition: 0.2s;
         }
+        .coin-item:active { background: #2b3139; }
+        .coin-item.active { border-left-color: var(--gold); background: rgba(240, 185, 11, 0.05); }
+        
+        .coin-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .coin-name { font-size: 11px; font-weight: bold; }
+        .coin-price { font-size: 11px; font-family: monospace; }
+        .coin-change { font-size: 9px; font-weight: bold; }
+
+        /* Control Panel */
+        .controls { 
+            position: absolute; top: 10px; left: 10px; z-index: 100; 
+            display: flex; gap: 8px; background: rgba(0,0,0,0.6); padding: 5px; border-radius: 6px;
+        }
+        .btn-tool { 
+            background: var(--border); border: 1px solid #474d57; color: #fff; 
+            font-size: 9px; padding: 4px 8px; border-radius: 4px; cursor: pointer;
+        }
+        .btn-tool.active { background: var(--gold); color: #000; border-color: var(--gold); }
+
+        .up { color: var(--green); }
+        .down { color: var(--red); }
     </style>
 </head>
 <body>
 
-<div class="badge-fixed">ATR 2 / KEY 1</div>
-
-<div class="main-container">
-    <div id="tv-chart-container">
-        <div id="tradingview_logic" style="height:100%;width:100%"></div>
+<div class="app-container">
+    <div id="chart-zone" class="grid-1">
+        <div class="controls">
+            <button class="btn-tool active" id="single-btn" onclick="setGrid(1)">SINGLE</button>
+            <button class="btn-tool" id="multi-btn" onclick="setGrid(4)">GRID 2x2</button>
+            <div style="font-size: 9px; color: var(--gold); align-self: center; margin-left: 10px;">ATR 2 / KEY 1</div>
+        </div>
+        <div id="tradingview_main" class="chart-frame"></div>
     </div>
 
-    <div class="side-bar">
-        <button class="coin-btn active-btn" onclick="changeSymbol('BINANCE:ORDIUSDT', this)">ORDI</button>
-        <button class="coin-btn" onclick="changeSymbol('BINANCE:DOTUSDT', this)">DOT</button>
-        <button class="coin-btn" onclick="changeSymbol('BINANCE:ZECUSDT', this)">ZEC</button>
-        <button class="coin-btn" onclick="changeSymbol('BINANCE:AXSUSDT', this)">AXS</button>
-        <button class="coin-btn" onclick="changeSymbol('BINANCE:SOLUSDT', this)">SOL</button>
-        <button class="coin-btn" onclick="changeSymbol('BINANCE:BTCUSDT', this)">BTC</button>
-        <button class="coin-btn" onclick="changeSymbol('BINANCE:ETHUSDT', this)">ETH</button>
-        <button class="coin-btn" onclick="changeSymbol('BINANCE:NEARUSDT', this)">NEAR</button>
-        <button class="coin-btn" onclick="changeSymbol('BINANCE:PEPEUSDT', this)">PEPE</button>
-        <button class="coin-btn" onclick="changeSymbol('BINANCE:XRPUSDT', this)">XRP</button>
-        <button class="coin-btn" onclick="changeSymbol('BINANCE:SUIUSDT', this)">SUI</button>
-    </div>
+    <div class="side-bar" id="watchlist">
+        </div>
 </div>
 
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-<script type="text/javascript">
-  let widget;
+<script>
+    const coins = [
+        { s: 'ORDIUSDT', n: 'ORDI' }, { s: 'DOTUSDT', n: 'DOT' }, 
+        { s: 'ZECUSDT', n: 'ZEC' }, { s: 'AXSUSDT', n: 'AXS' },
+        { s: 'SOLUSDT', n: 'SOL' }, { s: 'NEARUSDT', n: 'NEAR' },
+        { s: 'PEPEUSDT', n: 'PEPE' }, { s: 'BTCUSDT', n: 'BTC' },
+        { s: 'ETHUSDT', n: 'ETH' }, { s: 'XRPUSDT', n: 'XRP' }
+    ];
 
-  function loadChart(symbol) {
-    widget = new TradingView.widget({
-      "autosize": true,
-      "symbol": symbol,
-      "interval": "15",
-      "timezone": "Etc/UTC",
-      "theme": "dark",
-      "style": "1",
-      "locale": "en",
-      "enable_publishing": false,
-      "hide_top_toolbar": false,
-      "container_id": "tradingview_logic",
-      "backgroundColor": "#000000",
-      "gridColor": "rgba(42, 46, 57, 0.06)",
-      "studies": ["ATR@tv-basicstudies"]
-    });
-  }
+    let currentSymbol = 'BINANCE:ORDIUSDT';
 
-  function changeSymbol(symbol, el) {
-    document.querySelectorAll('.coin-btn').forEach(btn => btn.classList.remove('active-btn'));
-    el.classList.add('active-btn');
-    loadChart(symbol);
-  }
+    function createWatchlist() {
+        const list = document.getElementById('watchlist');
+        coins.forEach(coin => {
+            const div = document.createElement('div');
+            div.className = `coin-item ${coin.s === 'ORDIUSDT' ? 'active' : ''}`;
+            div.id = `item-${coin.s}`;
+            div.onclick = () => changeSymbol(`BINANCE:${coin.s}`, div);
+            div.innerHTML = `
+                <div class="coin-row">
+                    <span class="coin-name">${coin.n}</span>
+                    <span class="coin-change" id="chg-${coin.s}">...</span>
+                </div>
+                <div class="coin-row">
+                    <span class="coin-price" id="prc-${coin.s}">Loading</span>
+                </div>
+            `;
+            list.appendChild(div);
+        });
+    }
 
-  // По умолчанию открываем ORDI
-  loadChart('BINANCE:ORDIUSDT');
+    function loadChart(container, symbol) {
+        new TradingView.widget({
+            "autosize": true,
+            "symbol": symbol,
+            "interval": "15",
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "container_id": container,
+            "backgroundColor": "#0b0e11",
+            "gridColor": "rgba(42, 46, 57, 0.06)",
+            "hide_top_toolbar": false,
+            "studies": ["ATR@tv-basicstudies"]
+        });
+    }
+
+    function changeSymbol(symbol, el) {
+        document.querySelectorAll('.coin-item').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        currentSymbol = symbol;
+        if(document.getElementById('chart-zone').className === 'grid-1') {
+            loadChart('tradingview_main', symbol);
+        }
+    }
+
+    function setGrid(num) {
+        const zone = document.getElementById('chart-zone');
+        document.getElementById('single-btn').classList.toggle('active', num === 1);
+        document.getElementById('multi-btn').classList.toggle('active', num === 4);
+        
+        zone.innerHTML = '<div class="controls">' + document.querySelector('.controls').innerHTML + '</div>';
+        
+        if(num === 1) {
+            zone.className = 'grid-1';
+            const div = document.createElement('div');
+            div.id = 'tradingview_main';
+            div.className = 'chart-frame';
+            zone.appendChild(div);
+            loadChart('tradingview_main', currentSymbol);
+        } else {
+            zone.className = 'grid-4';
+            ['ORDI', 'BTC', 'SOL', 'AXS'].forEach((c, i) => {
+                const div = document.createElement('div');
+                div.id = `tv_grid_${i}`;
+                div.className = 'chart-frame';
+                zone.appendChild(div);
+                loadChart(`tv_grid_${i}`, `BINANCE:${c}USDT`);
+            });
+        }
+    }
+
+    // Имитация живых цен (через Binance API можно сделать реальные)
+    function updatePrices() {
+        coins.forEach(c => {
+            const prc = (Math.random() * 100).toFixed(2);
+            const chg = (Math.random() * 5 * (Math.random() > 0.5 ? 1 : -1)).toFixed(2);
+            const pEl = document.getElementById(`prc-${c.s}`);
+            const cEl = document.getElementById(`chg-${c.s}`);
+            if(pEl) pEl.innerText = prc;
+            if(cEl) {
+                cEl.innerText = (chg > 0 ? '+' : '') + chg + '%';
+                cEl.className = 'coin-change ' + (chg > 0 ? 'up' : 'down');
+            }
+        });
+    }
+
+    createWatchlist();
+    loadChart('tradingview_main', 'BINANCE:ORDIUSDT');
+    setInterval(updatePrices, 3000);
 </script>
 
 </body>
