@@ -2,122 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ULTRA Signals Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRO TERMINAL | ATR 2 KEY 1</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <style>
-        :root { --bg: #0b0e11; --card: #1e2329; --gold: #fcd535; --green: #00c076; --red: #cf304a; --text: #eaecef; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; overflow-x: hidden; }
-        
-        .header { background: var(--card); padding: 15px; text-align: center; border-bottom: 1px solid #333; position: sticky; top: 0; z-index: 100; }
-        .logo { color: var(--gold); font-weight: 800; font-size: 18px; letter-spacing: 1px; }
-
-        .tabs { display: flex; background: var(--card); margin: 15px; border-radius: 12px; padding: 4px; }
-        .tab { flex: 1; padding: 10px; text-align: center; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 10px; transition: 0.3s; }
-        .tab.active { background: #333; color: var(--gold); }
-
-        .content { padding: 0 15px 100px; }
-        
-        /* Signal Card */
-        .signal-card { background: var(--card); border-radius: 16px; padding: 16px; margin-bottom: 15px; border: 1px solid #2b3139; position: relative; }
-        .status { position: absolute; top: 16px; right: 16px; font-size: 12px; font-weight: bold; color: var(--green); display: flex; align-items: center; }
-        .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; margin-right: 6px; animation: pulse 1s infinite; }
-        
-        .pair-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-        .strategy-tag { font-size: 10px; background: rgba(252, 213, 53, 0.1); color: var(--gold); padding: 2px 6px; border-radius: 4px; }
-        
-        .stats { display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 1px solid #2b3139; }
-        .stat-item { display: flex; flex-direction: column; }
-        .stat-label { font-size: 11px; color: #848e9c; margin-bottom: 4px; }
-        .stat-val { font-size: 15px; font-weight: 600; }
-
-        .btn-action { background: var(--gold); color: #000; border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: 700; margin-top: 15px; cursor: pointer; transition: 0.2s; }
-        .btn-action:active { transform: scale(0.98); opacity: 0.8; }
-
-        /* Education View */
-        #education { display: none; text-align: left; }
-        .edu-card { background: var(--card); padding: 20px; border-radius: 16px; border: 1px dashed var(--gold); margin-top: 10px; }
-        .gold-text { color: var(--gold); font-weight: bold; }
-
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        body { margin: 0; background: #0b0e11; color: #eaecef; font-family: 'Inter', sans-serif; overflow: hidden; }
+        .top-bar { height: 45px; background: #181a20; display: flex; align-items: center; padding: 0 20px; border-bottom: 1px solid #2b3139; justify-content: space-between; }
+        .symbol { font-weight: bold; color: #f0b90b; display: flex; align-items: center; gap: 10px; }
+        .settings-badge { font-size: 10px; background: rgba(240, 185, 11, 0.1); color: #f0b90b; padding: 2px 8px; border-radius: 4px; border: 1px solid #f0b90b; }
+        #chart { width: 100vw; height: calc(100vh - 45px); }
+        .price-label { font-family: monospace; font-size: 16px; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <div class="logo">ULTRA ALPHA v2.1</div>
-</div>
-
-<div class="tabs">
-    <div class="tab active" onclick="switchTab('signals', this)">LIVE SIGNALS</div>
-    <div class="tab" onclick="switchTab('education', this)">GOLDEN SETUP</div>
-</div>
-
-<div class="content">
-    <div id="signals">
-        <div class="signal-card">
-            <div class="status"><div class="dot"></div> ACTIVE</div>
-            <div class="pair-name">ORDIUSDT.P</div>
-            <span class="strategy-tag">ATR 2 / KEY 1</span>
-            
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="stat-label">ENTRY</span>
-                    <span class="stat-val">2.521</span>
-                </div>
-                <div class="stat-item" style="text-align: right;">
-                    <span class="stat-label">PROFIT</span>
-                    <span class="stat-val" style="color: var(--green);">+4.12%</span>
-                </div>
-            </div>
-            <button class="btn-action" onclick="location.href='https://omg10.com/4/10721033'">UNLOCK TP4 & STOP LOSS</button>
-        </div>
-
-        <div class="signal-card">
-            <div class="status"><div class="dot"></div> ACTIVE</div>
-            <div class="pair-name">AXSUSDT.P</div>
-            <span class="strategy-tag">ATR 2 / KEY 1</span>
-            
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="stat-label">ENTRY</span>
-                    <span class="stat-val">1.163</span>
-                </div>
-                <div class="stat-item" style="text-align: right;">
-                    <span class="stat-label">PROFIT</span>
-                    <span class="stat-val" style="color: var(--green);">+6.45%</span>
-                </div>
-            </div>
-            <button class="btn-action" onclick="location.href='https://omg10.com/4/10721033'">UNLOCK TP4 & STOP LOSS</button>
-        </div>
+<div class="top-bar">
+    <div class="symbol">
+        BTC/USDT 
+        <span class="settings-badge">GOLDEN: ATR 2 / KEY 1</span>
     </div>
-
-    <div id="education">
-        <div class="edu-card">
-            <h3>The "Golden Standard"</h3>
-            <p>Our algorithm uses a unique combination of filters to reduce noise:</p>
-            <ul>
-                <li><span class="gold-text">ATR Period:</span> 2</li>
-                <li><span class="gold-text">Key Value:</span> 1</li>
-                <li><span class="gold-text">TP2 Multiplier:</span> 3 (Optimized)</li>
-            </ul>
-            <p style="font-size: 12px; color: #848e9c;">* This setup is best for 15m/1h timeframes on high-volatile altcoins.</p>
-            <button class="btn-action" style="background: transparent; color: var(--gold); border: 1px solid var(--gold);" onclick="location.href='https://omg10.com/4/10721033'">GET FULL STRATEGY GUIDE</button>
-        </div>
-    </div>
+    <div class="price-label" id="lastPrice">Connecting...</div>
 </div>
+
+<div id="chart"></div>
 
 <script>
-    function switchTab(id, el) {
-        document.getElementById('signals').style.display = 'none';
-        document.getElementById('education').style.display = 'none';
-        document.getElementById(id).style.display = 'block';
-        
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        el.classList.add('active');
-    }
+    // 1. Создаем график
+    const chart = LightweightCharts.createChart(document.getElementById('chart'), {
+        layout: { background: { color: '#0b0e11' }, textColor: '#d1d4dc' },
+        grid: { vertLines: { color: '#1f222d' }, horzLines: { color: '#1f222d' } },
+        crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+        rightPriceScale: { borderColor: '#2b3139' },
+        timeScale: { borderColor: '#2b3139', timeVisible: true, secondsVisible: false },
+    });
+
+    const candleSeries = chart.addCandlestickSeries({
+        upColor: '#2ebd85', downColor: '#f6465d', borderVisible: false,
+        wickUpColor: '#2ebd85', wickDownColor: '#f6465d',
+    });
+
+    // 2. Получаем данные с Binance (последние 100 свечей 15м)
+    fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=15m&limit=100')
+        .then(res => res.json())
+        .then(data => {
+            const formattedData = data.map(d => ({
+                time: d[0] / 1000,
+                open: parseFloat(d[1]),
+                high: parseFloat(d[2]),
+                low: parseFloat(d[3]),
+                close: parseFloat(d[4]),
+            }));
+            candleSeries.setData(formattedData);
+        });
+
+    // 3. Обновление цены в реальном времени через WebSocket
+    const binanceSocket = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@kline_15m');
+    binanceSocket.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+        const k = msg.k;
+        const lastPrice = parseFloat(k.c).toFixed(2);
+        document.getElementById('lastPrice').innerText = `$ ${lastPrice}`;
+        document.getElementById('lastPrice').style.color = k.x ? '#2ebd85' : '#eaecef';
+
+        candleSeries.update({
+            time: k.t / 1000,
+            open: parseFloat(k.o),
+            high: parseFloat(k.h),
+            low: parseFloat(k.l),
+            close: parseFloat(k.c),
+        });
+    };
 </script>
-
-<script src="https://quge5.com/88/tag.min.js" data-zone="219088" async data-cfasync="false"></script>
-
 </body>
 </html>
