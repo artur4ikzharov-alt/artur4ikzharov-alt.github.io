@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="monetag" content="56a7b430d930a3957d72e54f223ff33c">
+    <meta charset="UTF-8">
+    <title>SMM-Turbo | Бесплатная накрутка</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; margin: 0; text-align: center; }
+        .top-icons { background: white; padding: 10px; border-bottom: 1px solid #ddd; }
+        .top-icons img { height: 30px; margin: 0 5px; filter: grayscale(0.5); }
+        .card { background: white; max-width: 600px; margin: 40px auto; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .service-icon { background: #0088cc; color: white; width: 80px; height: 80px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 40px; font-weight: bold; }
+        h1 { font-size: 22px; color: #333; }
+        input { width: 90%; padding: 15px; border: 1px solid #ddd; border-radius: 10px; margin: 20px 0; font-size: 16px; }
+        .btns { display: flex; gap: 10px; justify-content: center; }
+        .btn { padding: 15px 25px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; flex: 1; text-decoration: none; }
+        .btn-green { background: #47d7ac; color: white; }
+        .btn-red { background: #ff5c5c; color: white; }
+        #timer-box { display: none; margin-top: 30px; padding: 20px; border-top: 1px solid #eee; }
+        .timer { font-size: 40px; color: #47d7ac; font-weight: bold; margin: 15px 0; }
+    </style>
+</head>
+<body>
+
+<div class="top-icons">
+    <span style="font-size: 20px; font-weight: bold; color: #333;">SMM <span style="color:red;">YT</span> CLONE</span>
+</div>
+
+<div class="card">
+    <div class="service-icon">TG</div>
+    <h1>Накрутка подписчиков в Телеграм (ТГ) бесплатно</h1>
+    <p style="color: #666; font-size: 14px;">Ниже укажите ссылку на канал, подождите 5 минут и получите результат!</p>
+    
+    <input type="text" id="link" placeholder="Ссылка на канал в Телеграм">
+    
+    <div class="btns">
+        <button class="btn btn-green" id="main-btn" onclick="start()">ДОСТУПНО БЕСПЛАТНО</button>
+        <a href="#" class="btn btn-red">ЗАКАЗАТЬ ПЛАТНО</a>
+    </div>
+
+    <div id="timer-box">
+        <p>Дождитесь завершения, не покидая страницу:</p>
+        <div class="timer" id="timer">05:00</div>
+        
+        <div style="padding: 20px; background: #fafafa; border: 1px dashed #ccc;">
+            ЗДЕСЬ БУДЕТ ТВОЙ БАННЕР
+        </div>
+        
+        <p style="margin-top: 20px; font-size: 14px; color: #888;">Поиграйте в "Крестики-нолики", пока ожидаете...</p>
+        <button style="background:#eee; border:none; padding:10px; border-radius:5px; cursor:pointer;">ИГРАТЬ СЕЙЧАС</button>
+    </div>
+</div>
+
+<script>
+    function start() {
+        let link = document.getElementById('link').value;
+        if(link.length < 3) return alert('Введите ссылку!');
+        
+        document.getElementById('main-btn').style.opacity = '0.5';
+        document.getElementById('main-btn').innerText = 'В ОЧЕРЕДИ...';
+        document.getElementById('timer-box').style.display = 'block';
+        
+        let time = 300;
+        let countdown = setInterval(() => {
+            time--;
+            let min = Math.floor(time / 60);
+            let sec = time % 60;
+            document.getElementById('timer').innerText = `0${min}:${sec < 10 ? '0'+sec : sec}`;
+            if(time <= 0) {
+                clearInterval(countdown);
+                window.location.href = 'ТВОЯ_ССЫЛКА_ADSTERRA_DIRECT_LINK';
+            }
+        }, 1000);
+    }
+</script>
+
+</body>
+</html>
