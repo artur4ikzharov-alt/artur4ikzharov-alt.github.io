@@ -1,146 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="monetag" content="56a7b430d930a3957d72e54f223ff33c">
-    <title>SMM-Turbo | Multi-Social Boost</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Signals Pro</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; text-align: center; color: #333; overflow-x: hidden; }
-        .header { background: white; padding: 15px; border-bottom: 1px solid #ddd; font-weight: bold; font-size: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .card { background: white; max-width: 500px; margin: 30px auto; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative; z-index: 2; }
-        
-        .social-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .social-opt { width: 60px; height: 60px; border-radius: 15px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid #eee; transition: 0.3s; font-weight: bold; font-size: 10px; background: white; }
-        .social-opt.active { border-color: #47d7ac; background: #e8f9f3; transform: scale(1.05); }
-        .social-opt img { width: 25px; margin-bottom: 5px; }
-
-        .service-icon { background: #0088cc; color: white; width: 80px; height: 80px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 30px; font-weight: bold; transition: 0.5s; }
-        
-        input { width: 90%; padding: 15px; border: 1px solid #ddd; border-radius: 10px; margin: 20px 0; font-size: 16px; outline: none; background: #fafafa; }
-        .btn { padding: 15px 25px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; transition: 0.3s; text-transform: uppercase; }
-        .btn-green { background: #47d7ac; color: white; box-shadow: 0 4px 15px rgba(71, 215, 172, 0.3); }
-        
-        #timer-box { display: none; margin-top: 30px; padding: 20px; border-top: 1px solid #eee; animation: fadeIn 0.5s; }
-        .timer { font-size: 48px; color: #47d7ac; font-weight: bold; margin: 15px 0; }
-        
-        .btn-game { background: #6c757d; color: white; border-radius: 30px; padding: 12px 20px; border: none; cursor: pointer; font-weight: bold; width: 80%; margin-top: 10px; }
-        
-        /* Живая лента */
-        .live-feed { position: fixed; bottom: 20px; left: 20px; background: white; padding: 10px 20px; border-radius: 50px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px; font-size: 13px; transform: translateY(150%); transition: 0.5s; z-index: 100; border-left: 4px solid #47d7ac; }
-        .live-feed.show { transform: translateY(0); }
-        .dot { width: 8px; height: 8px; background: #47d7ac; border-radius: 50%; animation: pulse 1.5s infinite; }
-
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        body { font-family: 'Inter', sans-serif; background: #0b0e11; color: white; margin: 0; padding: 15px; }
+        .signal-card { background: #1e2329; border-radius: 12px; padding: 15px; margin-bottom: 15px; border-left: 5px solid #00c076; }
+        .pair { font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; }
+        .price-box { display: flex; justify-content: space-between; margin-top: 10px; font-size: 14px; color: #848e9c; }
+        .target { color: #00c076; font-weight: bold; }
+        .btn-unlock { background: #fcd535; color: #1e2329; border: none; width: 100%; padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; }
+        .gold-standard { background: linear-gradient(45deg, #fcd535, #f0b90b); color: #1e2329; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: bold; text-align: center; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
+<div class="gold-standard">SETTINGS: ATR 2 / KEY 1 ENABLED</div>
+
+<div id="signals-container">
+    <div class="signal-card">
+        <div class="pair">#AXSUSDT.P <span style="color:#00c076">+4.2%</span></div>
+        <div class="price-box">
+            <span>Вход: 1.163</span>
+            <span>Тек: 1.205</span>
+        </div>
+        <button class="btn-unlock" onclick="location.href='https://omg10.com/4/10721033'">ПОСМОТРЕТЬ ЦЕЛИ (TP4)</button>
+    </div>
+
+    <div class="signal-card">
+        <div class="pair">#DOTUSDT.P <span style="color:#00c076">+2.8%</span></div>
+        <div class="price-box">
+            <span>Вход: 1.546</span>
+            <span>Тек: 1.589</span>
+        </div>
+        <button class="btn-unlock" onclick="location.href='https://omg10.com/4/10721033'">ПОСМОТРЕТЬ ЦЕЛИ (TP4)</button>
+    </div>
+</div>
+
 <script src="https://quge5.com/88/tag.min.js" data-zone="219088" async data-cfasync="false"></script>
-
-<div class="header">SMM <span style="color:red">YT</span> CLONE</div>
-
-<div class="card">
-    <div id="service-icon" class="service-icon">TG</div>
-    
-    <h1 id="t-title">Накрутка</h1>
-    <p id="t-desc" style="color: #666; font-size: 14px;">Выберите соцсеть</p>
-
-    <div class="social-selector">
-        <div class="social-opt active" onclick="selectSocial('TG', '#0088cc', this)">TELEGRAM</div>
-        <div class="social-opt" onclick="selectSocial('INST', '#e1306c', this)">INSTA</div>
-        <div class="social-opt" onclick="selectSocial('TT', '#000000', this)">TIKTOK</div>
-        <div class="social-opt" onclick="selectSocial('YT', '#ff0000', this)">YOUTUBE</div>
-    </div>
-
-    <input type="text" id="link" placeholder="https://...">
-    <button class="btn btn-green" id="main-btn" onclick="start()">START FREE BOOST</button>
-
-    <div id="timer-box">
-        <p id="t-wait">Дождитесь завершения...</p>
-        <div class="timer" id="timer">05:00</div>
-        
-        <p id="t-game-inv">Пока ждете, получите бонусные баллы:</p>
-        <button class="btn-game" onclick="playGame()">ИГРАТЬ И УСКОРИТЬ</button>
-    </div>
-</div>
-
-<div id="live-feed" class="live-feed">
-    <div class="dot"></div>
-    <span id="feed-text">Пользователь @alex получил +500 подписчиков</span>
-</div>
-
-<script>
-    const smartlink = 'https://omg10.com/4/10721033'; // Твоя ссылка
-
-    const lang = {
-        uk: { title: "Безкоштовна накрутка", desc: "Виберіть соцмережу", btn: "ЗАПУСТИТИ", wait: "Обробка запиту...", game: "Поки чекаєте, отримайте бонус:" },
-        ru: { title: "Бесплатная накрутка", desc: "Выберите соцсеть", btn: "ЗАПУСТИТЬ", wait: "Обработка запроса...", game: "Пока ждете, получите бонус:" },
-        en: { title: "Free Social Boost", desc: "Select social network", btn: "START BOOST", wait: "Processing request...", game: "While waiting, get a bonus:" }
-    };
-
-    let userLang = navigator.language.substring(0, 2);
-    if (!lang[userLang]) userLang = 'en';
-
-    document.getElementById('t-title').innerText = lang[userLang].title;
-    document.getElementById('t-desc').innerText = lang[userLang].desc;
-    document.getElementById('main-btn').innerText = lang[userLang].btn;
-    document.getElementById('t-wait').innerText = lang[userLang].wait;
-    document.getElementById('t-game-inv').innerText = lang[userLang].game;
-
-    function selectSocial(name, color, el) {
-        document.getElementById('service-icon').innerText = name;
-        document.getElementById('service-icon').style.background = color;
-        document.querySelectorAll('.social-opt').forEach(opt => opt.classList.remove('active'));
-        el.classList.add('active');
-    }
-
-    function start() {
-        let val = document.getElementById('link').value;
-        if (val.length < 5) return alert('Enter link!');
-        document.getElementById('main-btn').style.display = 'none';
-        document.getElementById('timer-box').style.display = 'block';
-        let time = 300;
-        let countdown = setInterval(() => {
-            time--;
-            let min = Math.floor(time / 60);
-            let sec = time % 60;
-            document.getElementById('timer').innerText = `${min}:${sec < 10 ? '0'+sec : sec}`;
-            if (time <= 0) {
-                clearInterval(countdown);
-                window.location.href = smartlink;
-            }
-        }, 1000);
-    }
-
-    // Функция для кнопки "Играть"
-    function playGame() {
-        // Открываем рекламу в новой вкладке
-        window.open(smartlink, '_blank');
-        // Меняем текст на кнопке, чтобы человек думал, что ускорил процесс
-        alert("Бонус активирован! Скорость накрутки увеличена.");
-    }
-
-    // Живая лента
-    const users = ['Andrey', 'Sergey', 'Marta', 'Dmitry', 'Ivan', 'Olga', 'Lana', 'Alex'];
-    const counts = ['100', '250', '500', '1000'];
-    
-    function showFeed() {
-        const feed = document.getElementById('live-feed');
-        const text = document.getElementById('feed-text');
-        const randomUser = users[Math.floor(Math.random()*users.length)];
-        const randomCount = counts[Math.floor(Math.random()*counts.length)];
-        
-        text.innerText = `User @${randomUser}... just received +${randomCount} followers`;
-        feed.classList.add('show');
-        
-        setTimeout(() => {
-            feed.classList.remove('show');
-        }, 4000);
-    }
-
-    setInterval(showFeed, 8000);
-</script>
-
 </body>
 </html>
