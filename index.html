@@ -5,50 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ATR GOLD TERMINAL</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; color: #d1d4dc; }
         
-        /* Панель с монетами скроллится горизонтально, если их много */
-        .top-bar { 
-            height: 50px; background: #131722; display: flex; align-items: center; 
-            padding: 0 10px; border-bottom: 1px solid #2a2e39; gap: 8px;
-            overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch;
+        /* Основная сетка: график слева, монеты справа */
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 100px; /* 100px под панель монет */
+            height: 100vh;
+            width: 100vw;
         }
-        .top-bar::-webkit-scrollbar { display: none; }
+
+        #tv-chart-container { 
+            height: 100%; 
+            width: 100%; 
+            border-right: 1px solid #2a2e39;
+        }
+
+        /* Правая панель */
+        .side-bar { 
+            background: #131722; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 10px 5px; 
+            gap: 8px;
+            overflow-y: auto;
+        }
+
+        .side-bar::-webkit-scrollbar { width: 0px; }
 
         .coin-btn {
-            background: #2a2e39; color: #d1d4dc; border: none; padding: 6px 12px;
-            border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold;
+            background: #2a2e39; 
+            color: #d1d4dc; 
+            border: none; 
+            width: 80px;
+            padding: 8px 0;
+            border-radius: 4px; 
+            font-size: 11px; 
+            cursor: pointer; 
+            font-weight: bold;
             flex-shrink: 0;
+            text-align: center;
         }
+        
         .coin-btn:active { background: #363c4e; }
         .active-btn { border: 1px solid #f0b90b; color: #f0b90b; background: rgba(240, 185, 11, 0.1); }
 
-        .strategy-badge { 
-            position: fixed; top: 55px; right: 10px; z-index: 10;
-            font-size: 9px; background: rgba(0, 0, 0, 0.7); color: #f0b90b; 
-            border: 1px solid #f0b90b; padding: 2px 6px; border-radius: 3px; 
+        .badge-fixed {
+            position: fixed;
+            bottom: 10px;
+            right: 110px;
+            font-size: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #f0b90b;
+            padding: 2px 8px;
+            border: 1px solid #f0b90b;
+            border-radius: 4px;
+            z-index: 100;
         }
-
-        #tv-chart-container { height: calc(100% - 50px); width: 100%; }
     </style>
 </head>
 <body>
 
-<div class="top-bar">
-    <button class="coin-btn active-btn" onclick="changeSymbol('BINANCE:ORDIUSDT', this)">ORDI</button>
-    <button class="coin-btn" onclick="changeSymbol('BINANCE:DOTUSDT', this)">DOT</button>
-    <button class="coin-btn" onclick="changeSymbol('BINANCE:ZECUSDT', this)">ZEC</button>
-    <button class="coin-btn" onclick="changeSymbol('BINANCE:AXSUSDT', this)">AXS</button>
-    <button class="coin-btn" onclick="changeSymbol('BINANCE:SOLUSDT', this)">SOL</button>
-    <button class="coin-btn" onclick="changeSymbol('BINANCE:BTCUSDT', this)">BTC</button>
-    <button class="coin-btn" onclick="changeSymbol('BINANCE:ETHUSDT', this)">ETH</button>
-    <button class="coin-btn" onclick="changeSymbol('BINANCE:NEARUSDT', this)">NEAR</button>
-</div>
+<div class="badge-fixed">ATR 2 / KEY 1</div>
 
-<div class="strategy-badge">ATR 2 / KEY 1</div>
+<div class="main-container">
+    <div id="tv-chart-container">
+        <div id="tradingview_logic" style="height:100%;width:100%"></div>
+    </div>
 
-<div id="tv-chart-container">
-    <div id="tradingview_logic" style="height:100%;width:100%"></div>
+    <div class="side-bar">
+        <button class="coin-btn active-btn" onclick="changeSymbol('BINANCE:ORDIUSDT', this)">ORDI</button>
+        <button class="coin-btn" onclick="changeSymbol('BINANCE:DOTUSDT', this)">DOT</button>
+        <button class="coin-btn" onclick="changeSymbol('BINANCE:ZECUSDT', this)">ZEC</button>
+        <button class="coin-btn" onclick="changeSymbol('BINANCE:AXSUSDT', this)">AXS</button>
+        <button class="coin-btn" onclick="changeSymbol('BINANCE:SOLUSDT', this)">SOL</button>
+        <button class="coin-btn" onclick="changeSymbol('BINANCE:BTCUSDT', this)">BTC</button>
+        <button class="coin-btn" onclick="changeSymbol('BINANCE:ETHUSDT', this)">ETH</button>
+        <button class="coin-btn" onclick="changeSymbol('BINANCE:NEARUSDT', this)">NEAR</button>
+        <button class="coin-btn" onclick="changeSymbol('BINANCE:PEPEUSDT', this)">PEPE</button>
+        <button class="coin-btn" onclick="changeSymbol('BINANCE:XRPUSDT', this)">XRP</button>
+        <button class="coin-btn" onclick="changeSymbol('BINANCE:SUIUSDT', this)">SUI</button>
+    </div>
 </div>
 
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
@@ -79,7 +117,7 @@
     loadChart(symbol);
   }
 
-  // Запуск с твоей первой монеты
+  // По умолчанию открываем ORDI
   loadChart('BINANCE:ORDIUSDT');
 </script>
 
